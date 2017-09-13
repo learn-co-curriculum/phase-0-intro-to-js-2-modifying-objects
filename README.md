@@ -396,7 +396,7 @@ Object.assign({ eggs: 3 }, { chocolateChips: '1 cup', flour: '2 cups' }, { flour
 // { eggs: 3, chocolateChips: "1 cup", flour: "1/2 cup" }
 ```
 
-Pay attention to the `flour` property in the above example. **If multiple objects have a property with the same key, the right-most object's value for that key wins out**. Essentially, the last call to `Object.assign()` in the above snippet is wrapping all of the following assignments into a single line of code:
+Pay attention to the `flour` property in the above example. **If multiple objects have a property with the same key, the the last key to be defined wins out**. Essentially, the last call to `Object.assign()` in the above snippet is wrapping all of the following assignments into a single line of code:
 ```js
 const recipe = { eggs: 3 };
 
