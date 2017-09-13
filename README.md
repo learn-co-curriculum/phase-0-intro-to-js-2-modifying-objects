@@ -109,6 +109,8 @@ address.zipCode;
 
 Dot notation is fantastic for readability, as we can just reference the bare key name (e.g., `street1` or `zipCode`). Because of this simple syntax, it should be your go-to strategy for accessing the properties of an object.
 
+***NOTE***: Most people just call it _dot notation_ or the _dot operator_, so don't worry too much about remembering the term _member access operator_.
+
 #### Accessing nonexistent properties
 If we try to access the `country` property of our `address` object, what will happen?
 
@@ -163,12 +165,12 @@ wildKeys["$ $ bill, y'all!"];
 // => "Ever"
 ```
 
-In order to access a property via dot notation, **the key must follow the same naming rules applied to variables and functions**. It's best to name all of our keys as follows:
+In order to access a property via dot notation, **the key must follow the same naming rules applied to variables and functions**. It's also important to note that under the hood **all keys are strings**. Don't waste too much energy worrying whether a key is accessible via dot notation; simply follow these rules when naming your keys, and everything will work:
 - camelCaseEverything.
 - Start the key with a lowercase letter.
 - No spaces or punctuation.
 
-If you follow those three rules, you'll be able to access all of an object's properties via bracket notation or dot notation.
+If you follow those three rules, you'll be able to access all of an object's properties via bracket notation **or** dot notation.
 
 ***Top Tip***: Always name your object's keys according to the above three rules. Keeping everything standardized is good, and being able to access properties via dot notation is much more readable than having to always default to bracket notation.
 
@@ -341,7 +343,45 @@ mondayMenu.salad;
 
 Dang! We don't serve Caesar salad on Mondays. Instead of destructively updating the original menu, is there a way to nondestructively merge the change(s) into a new object, leaving the original intact?
 
-## `Object.assign()`
+## Nondestructively returning a new object
+We can create a method that accepts the old menu and the proposed change:
+```js
+function nondestructivelyUpdateObject(obj, key, value) {
+  // Code to return new, updated menu object
+}
+```
+
+Then, with the ES2015 _spread operator_, we can copy all of the old menu object's properties into a new object:
+```js
+function nondestructivelyUpdateObject(obj, key, value) {
+  const newObj = { ...obj };
+
+  // Code to return new, updated menu object
+}
+```
+
+And finally, we can update the new menu object with the proposed change and return the updated menu:
+```js
+function nondestructivelyUpdateObject(obj, key, value) {
+  const newObj = { ...obj };
+
+  newObj[key] = value;
+
+  return newObj;
+}
+
+const sundayMenu = nondestructivelyUpdateObject(tuesdayMenu, 'fries', 'Shoestring');
+
+tuesdayMenu.fries;
+// => "Sweet potato"
+
+sundayMenu.fries;
+// => "Shoestring"
+```
+
+However, that's quite a bit of code to write, and it's not very extensible. If we want to modify more than a single property, we'll have to completely rewrite our function! Luckily, JavaScript has a much better solution for us.
+
+### `Object.assign()`
 JavaScript provides us access to a global `Object` object that has a bunch of helpful methods we can use. One of those methods is `Object.assign()`, which allows us to combine properties from multiple objects into a single object. The first argument passed to `Object.assign()` is the initial object in which all of the properties are merged. Every additional argument is an object whose properties we want to merge into the first object:
 ```js
 Object.assign(initialObject, additionalObject, additionalObject, ...);
@@ -356,7 +396,16 @@ Object.assign({ eggs: 3 }, { chocolateChips: '1 cup', flour: '2 cups' }, { flour
 // { eggs: 3, chocolateChips: "1 cup", flour: "1/2 cup" }
 ```
 
-Pay attention to the `flour` property in the above example. If multiple objects have a property with the same key the right-most object's value for that key wins out.
+Pay attention to the `flour` property in the above example. **If multiple objects have a property with the same key, the right-most object's value for that key wins out**. Essentially, the last call to `Object.assign()` in the above snippet is wrapping all of the following assignments into a single line of code:
+```js
+const recipe = { eggs: 3 };
+
+recipe.chocolateChips = '1 cup';
+
+recipe.flour = '2 cups';
+
+recipe.flour = '1/2 cup';
+```
 
 A common pattern for `Object.assign()` is to provide an empty object as the first argument. That way we're composing an entirely new object instead of modifying or overwriting the properties of an existing object. This pattern allows us to rewrite the above `destructivelyUpdateObject()` function in a nondestructive way:
 ```js
@@ -431,6 +480,8 @@ Object.keys(wednesdayMenu);
 ```
 
 Notice that it didn't pick up the keys in the nested `cheesePlate` object — just the keys from the properties declared at the top level within `wednesdayMenu`.
+
+***NOTE***: The sequence in which keys are ordered in the returned array is not consistent across browsers and should not be relied upon. All of the object's keys will be in the array, but you can't count on `keyA` always being at index `0` of the array and `keyB` always being at index `1`.
 
 ## Deleting a property from an object
 Uh oh, we ran out of Southwestern dressing, so we have to take the salad off the menu. In JavaScript, that's as easy as:
