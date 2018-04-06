@@ -564,7 +564,7 @@ Hm, then maybe it's the last element?
 
 ```js
 myArray[myArray.length - 1];
-// => undefined
+// => 7
 ```
 
 What the heck? Where is it?
