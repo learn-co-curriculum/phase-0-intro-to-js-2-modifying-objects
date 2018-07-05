@@ -2,7 +2,7 @@
 
 ## Problem Statement
 
-Arrays are great for representing simple, ordered data sets, but they're
+`Array`s are great for representing simple, ordered data sets, but they're
 generally not so great at modeling a more complex structure. For that, we need
 `Object`s.
 
