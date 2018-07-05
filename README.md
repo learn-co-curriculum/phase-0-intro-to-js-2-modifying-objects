@@ -460,7 +460,7 @@ We can create a method that accepts the old menu and the proposed change:
 
 ```js
 function nondestructivelyUpdateObject(obj, key, value) {
-  // Code to return new, updated menu `Object`
+  // Code to return new, updated menu object
 }
 ```
 
@@ -688,7 +688,7 @@ returns when we use it on an `Array`:
 
 ```js
 typeof [];
-// => "`Object`"
+// => "object"
 ```
 
 We can set properties on an `Array` just like a regular `Object`:
