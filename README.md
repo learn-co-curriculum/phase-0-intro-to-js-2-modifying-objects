@@ -598,7 +598,7 @@ const newOfferings = {
   cheesePlate: {
     soft: 'Brie',
     semiSoft: 'Fontina',
-    hard: 'Asiago'
+    hard: 'Provolone'
   },
   salad: 'Southwestern'
 };
@@ -606,10 +606,39 @@ const newOfferings = {
 const wednesdayMenu = createNewMenu(tuesdayMenu, newOfferings);
 
 wednesdayMenu;
-// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Asiago" }, fries: "Sweet potato", salad: "Southwestern" }
+// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Provolone" }, fries: "Sweet potato", salad: "Southwestern" }
 
 tuesdayMenu;
 // => { cheesePlate: { soft: "Chèvre", semiSoft: "Gruyère", hard: "Manchego" }, fries: "Sweet potato", salad: "Caesar" }
+```
+
+**Note:** For deep cloning, we need to use other alternatives because `Object.assign()` copies property values. 
+
+For example, if `newOfferings` did not have an updated value for `hard` cheese such as:
+
+```js
+const newOfferings = {
+  cheesePlate: {
+    soft: 'Brie',
+    semiSoft: 'Fontina'
+  },
+  salad: 'Southwestern'
+};
+```
+
+Our output for `const wednesdayMenu = createNewMenu(tuesdayMenu, newOfferings);` would look like this:
+
+```js
+wednesdayMenu;
+// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina"}, fries: "Sweet potato", salad: "Southwestern" }
+```
+
+... instead of the desired outcome of this:
+
+```js
+
+wednesdayMenu;
+// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: 'Manchego'}, fries: "Sweet potato", salad: "Southwestern" }
 ```
 
 Bon appétit!
@@ -626,7 +655,7 @@ const wednesdayMenu = {
   cheesePlate: {
     soft: 'Brie',
     semiSoft: 'Fontina',
-    hard: 'Asiago'
+    hard: 'Provolone'
   },
   fries: 'Sweet potato',
   salad: 'Southwestern'
@@ -654,7 +683,7 @@ const wednesdayMenu = {
   cheesePlate: {
     soft: 'Brie',
     semiSoft: 'Fontina',
-    hard: 'Asiago'
+    hard: 'Provolone'
   },
   fries: 'Sweet potato',
   salad: 'Southwestern'
@@ -664,7 +693,7 @@ delete wednesdayMenu.salad;
 // => true
 
 wednesdayMenu;
-// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Asiago" }, fries: "Sweet potato" }
+// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Provolone" }, fries: "Sweet potato" }
 ```
 
 We pass the property that we'd like to remove to the `delete` operator, and
