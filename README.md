@@ -597,7 +597,8 @@ const tuesdayMenu = {
 const newOfferings = {
   cheesePlate: {
     soft: 'Brie',
-    semiSoft: 'Fontina'
+    semiSoft: 'Fontina',
+    hard: 'Asiago'
   },
   salad: 'Southwestern'
 };
@@ -605,7 +606,7 @@ const newOfferings = {
 const wednesdayMenu = createNewMenu(tuesdayMenu, newOfferings);
 
 wednesdayMenu;
-// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Manchego" }, fries: "Sweet potato", salad: "Southwestern" }
+// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Asiago" }, fries: "Sweet potato", salad: "Southwestern" }
 
 tuesdayMenu;
 // => { cheesePlate: { soft: "Chèvre", semiSoft: "Gruyère", hard: "Manchego" }, fries: "Sweet potato", salad: "Caesar" }
@@ -625,7 +626,7 @@ const wednesdayMenu = {
   cheesePlate: {
     soft: 'Brie',
     semiSoft: 'Fontina',
-    hard: 'Manchego'
+    hard: 'Asiago'
   },
   fries: 'Sweet potato',
   salad: 'Southwestern'
@@ -653,7 +654,7 @@ const wednesdayMenu = {
   cheesePlate: {
     soft: 'Brie',
     semiSoft: 'Fontina',
-    hard: 'Manchego'
+    hard: 'Asiago'
   },
   fries: 'Sweet potato',
   salad: 'Southwestern'
@@ -663,7 +664,7 @@ delete wednesdayMenu.salad;
 // => true
 
 wednesdayMenu;
-// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Manchego" }, fries: "Sweet potato" }
+// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Asiago" }, fries: "Sweet potato" }
 ```
 
 We pass the property that we'd like to remove to the `delete` operator, and
