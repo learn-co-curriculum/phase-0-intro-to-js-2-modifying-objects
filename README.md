@@ -497,16 +497,11 @@ sundayMenu.fries;
 ```
 
 **A Side Note**: You may notice that we're using `const` here, but _adding_ a key
-and value. But that can't be right, since `const` is immutable, right? Well,
-the `const` is used to make _variables_ that cannot be re-assigned, _but the
-content is still mutable_. Variables in JavaScript can be thought of as
-'buckets' containing _stuff_. You can place data into the container and then
-refer to it with the variable name.  The _data_ in a `const` is still mutable,
-but the _bucket_ is not. So declaring an `Object`, `const testObject = {a: 1}`,
-and then trying to reassign it, `testObject = {b:2}`, will cause an error
-because we are trying to re-assign the variable `testObject` to a new `Object`.
-Modifying properties, such as adding keys or pushing into an `Array`, won't re-
-assign the `Object`, just change the content.
+and value. But that can't be right, since `const` means ***constant***, that is
+can't change. The _data_ in a `const` pointing to an `Array` or `Object`
+can still be changed, but a new value _cannot_ be assigned to the name. Given `const
+x = {}` it's OK to say `x.dog = "Poodle"`, but it is ***not*** OK to say `x = [1,2,3]`.
+
 
 Anyway, back to nondestructively returning `Object`s. We've got our code written,
 but it's quite a bit to write, and it's not very extensible. If we want to
