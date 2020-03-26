@@ -100,7 +100,7 @@ here is the ***`Object`***.
 We briefly touched on the syntax for an `Object` back in the data types lesson,
 and let's quickly revisit that description here:
 
->JavaScript `Object`s are a collection of properties bounded by curly braces (`{ }`), similar to a hash in Ruby. The properties can point to values of any data type — even other `Object`s.
+>JavaScript `Object`s are a collection of properties bounded by curly braces (`{ }`). The properties can point to values of any data type — even other `Object`s.
 
 We can have empty `Object`s:
 
