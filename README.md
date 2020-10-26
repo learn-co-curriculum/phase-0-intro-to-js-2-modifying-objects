@@ -8,20 +8,20 @@ generally not so great at modeling a more complex structure. For that, we need
 
 > **ASIDE**: Un-helpfully JavaScript called this thing with curly braces (`{}`)
 > an `Object`.
->
+
 > It's similar to Ruby's `Hash`, Python's `Dictionary` or C-like languages'
 > `struct`(ure).
->
+
 > There *is* a relationship to object-oriented 
 > programming where we create classes and instances, but that's not what's
 > at play here. Don't confuse the two.
->
+
 > When JavaScript was created, it was thinking it'd only be a lightweight language
 > for doing DOM-based programming. It didn't think that it would ever need
 > "object orientation" like Java or C++ did. But JavaScript turned out to be
 > way more popular than even it expected and **later** gained that class- and
 > instance-based thing known as "Object-Oriented Programming."
->
+
 > So for this lesson and the next few that follow, try not to think
 > of `Object` as being like "Object-Oriented Programming," but instead think
 > of it as being closer to a key/value based data structure.
@@ -891,6 +891,7 @@ and use the convenience methods `Object.assign()` and `Object.keys()`. We also
 traced the link between `Object`s and `Array`s.
 
 ## Resources
+
 - MDN
   + [`Object.assign()`][assign]
   + [`Object.keys()`][keys]
