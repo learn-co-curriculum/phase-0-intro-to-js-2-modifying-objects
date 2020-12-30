@@ -902,4 +902,3 @@ traced the link between `Object`s and `Array`s.
 [keys]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
 [delete]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete
 [Basics]: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Basics
-- [Objects in javascript : object.assign/deep copy](https://medium.com/@tkssharma/objects-in-javascript-object-assign-deep-copy-64106c9aefab)
