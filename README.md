@@ -1,367 +1,49 @@
-# Objects
+# Modifying Objects
 
-## Problem Statement
+## Learning Goals
 
-`Array`s are great for representing simple, ordered data sets, but they're
-generally not so great at modeling a more complex structure. For that, we need
-`Object`s.
+* Add an `Object` property using dot or bracket notation
+* Modify a property using dot or bracket notation
+* Update an `Object` nondestructively
+* Use `Object.assign()`
+* Remove a property from an `Object`
+* Identify the relationship between `Array`s and `Object`s
 
-> **ASIDE**: Un-helpfully JavaScript called this thing with curly braces (`{}`)
-> an `Object`.
+## Introduction
 
-> It's similar to Ruby's `Hash`, Python's `Dictionary` or C-like languages'
-> `struct`(ure).
+In the previous lesson, we learned the basics of creating `Object`s and
+accessing their properties. In this lesson we'll learn how to modify and remove
+properties, both destructively and nondestructively. Finally, we'll explore the
+relationship between `Array`s and `Object`s.
 
-> There *is* a relationship to object-oriented 
-> programming where we create classes and instances, but that's not what's
-> at play here. Don't confuse the two.
+As always, don't forget to follow along in [repl.it][].
 
-> When JavaScript was created, it was thinking it'd only be a lightweight language
-> for doing DOM-based programming. It didn't think that it would ever need
-> "object orientation" like Java or C++ did. But JavaScript turned out to be
-> way more popular than even it expected and **later** gained that class- and
-> instance-based thing known as "Object-Oriented Programming."
+## Add an `Object` Property Using Dot or Bracket Notation
 
-> So for this lesson and the next few that follow, try not to think
-> of `Object` as being like "Object-Oriented Programming," but instead think
-> of it as being closer to a key/value based data structure.
-
-## Objectives
-
-1. Identify JavaScript `Object`s
-2. Access a value stored in an `Object`
-3. Add a property to an `Object`
-4. Use convenience methods like `Object.assign()` and `Object.keys()`
-5. Remove a property from an `Object`
-6. Identify the Relationship Between Arrays and Objects
-
-## Identify JavaScript Objects
-
-Let's think about how we could represent the address of Flatbook HQ in JavaScript.
-
-Addresses are made up of words and numbers, so at first it might make sense to
-store the address as a string:
+We know how to initialize a variable by declaring it and assigning it a value
+using the assignment operator:
 
 ```js
-const address = '11 Broadway, 2nd Floor, New York, NY 10004';
+const city = "New York";
 ```
 
-That looks decent enough, but what happens if the company moves to a different
-floor in the same building? We just need to modify one piece of the address, but
-with a string we'd have to involve some pretty complicated find-and-replace
-pattern matching or replace the entire thing. Instead, let's throw the different
-pieces of the address into an `Array`:
+The process of creating a property inside an existing object is similar; we
+specify the key and assign it a value:
 
 ```js
-const address = ['11 Broadway', '2nd Floor', 'New York', 'NY', 10004];
+const circle = {}; // Create `circle` and set it to an empty Object
+
+circle;
+//=> {}
+
+circle.radius = 5; // Create the key inside `circle` and set its value to 5 
+
+circle;
+//=> { radius: 5 }
 ```
 
-Now, we can just grab the small piece that we want to update and leave the rest
-as-is:
-
-```js
-address[1] = '3rd Floor';
-
-address;
-// => ["11 Broadway", "3rd Floor", "New York", "NY", 10004]
-```
-
-This seems like a better solution, but it still has its drawbacks. Namely,
-`address[1]` is a **terrible** way to refer to the second line of an address.
-What if there is no second line, e.g., `['11 Broadway', 'New York', 'NY',
-10004]`? Then `address[1]` will contain the city name instead of the floor
-number.
-
-We could standardize it, putting an empty string in `address[1]` if there's no
-second line in the address, but it's still poorly named. `address[1]` offers
-very little insight into what data we should expect to find in there. It's a
-part of an address, sure, but which part?
-
-To get around this, we could store the individual pieces of the address in
-separate, appropriately-named variables:
-
-```js
-const street1 = '11 Broadway';
-const street2 = '2nd Floor';
-const city = 'New York';
-const state = 'NY';
-const zipCode = 10004;
-```
-
-That's solved one issue but reintroduced the same problem we tackled in the
-lesson on `Array`s: storing pieces of related data in a bunch of unrelated
-variables is not a great idea! If only there were a best-of-both-worlds solution
-— a way to store all of our address information in a single data structure while
-also maintaining a descriptive naming scheme. The data structure we're after
-here is the ***`Object`***.
-
-### What Is an Object?
-
-We briefly touched on the syntax for an `Object` back in the data types lesson,
-and let's quickly revisit that description here:
-
->JavaScript `Object`s are a collection of properties bounded by curly braces (`{ }`). The properties can point to values of any data type — even other `Object`s.
-
-We can have empty `Object`s:
-
-```js
-{}
-```
-
-Or `Object`s with a single _key-value_ pair:
-
-```js
-{ key: value }
-```
-
-When we have to represent multiple key-value pairs in the same `Object` (which is
-most of the time), we use commas to separate them out:
-
-```js
-{
-  key1: value1,
-  key2: value2
-}
-```
-
-For a real example, let's see our address as an `Object`:
-
-```js
-const address = {
-  street1: '11 Broadway',
-  street2: '2nd Floor',
-  city: 'New York',
-  state: 'NY',
-  zipCode: 10004
-};
-```
-
-The real data in an `Object` is stored in the _value_ half of the key-value
-pairings. The _key_ is what lets us access that value. In the same way we use
-_identifiers_ to name variables and functions, inside an `Object` we assign each
-value a key. We can then refer to that key and the JavaScript engine knows
-exactly which value we're trying to access.
-
-## Access a Value Stored in an Object
-
-There are two ways to access values in an `Object`, one of which we already
-learned about in the `Array`s lesson: dot notation and bracket notation.
-
-### Dot Notation
-
-With _dot notation_, we use the _member access operator_ (a single period) to
-access values in an `Object`. For example, we can grab the individual pieces of
-our address, above, as follows:
-
-```js
-address.street1;
-// => "11 Broadway"
-
-address.street2;
-// => "2nd Floor"
-
-address.city;
-// => "New York"
-
-address.state;
-// => "NY"
-
-address.zipCode;
-// => 10004
-```
-
-Dot notation is fantastic for readability, as we can just reference the bare key
-name (e.g., `street1` or `zipCode`). Because of this simple syntax, it should be
-your go-to strategy for accessing the properties of an `Object`.
-
-***NOTE***: Most people just call it _dot notation_ or the _dot operator_, so don't
-worry too much about remembering the term _member access operator_.
-
-#### Accessing Nonexistent Properties
-
-If we try to access the `country` property of our `address` `Object`, what will
-happen?
-
-```js
-address.country;
-// => undefined
-```
-
-It returns `undefined` because there is no matching key on the `Object`.
-JavaScript is too nice to throw an error, so it lets us down gently. Keep this
-in mind, though: if you're seeing `undefined` when trying to access an `Object`'s
-properties, it's a good indicator to recheck which properties exist on the
-`Object` (along with your spelling and capitalization)!
-
-### Bracket Notation
-
-With _bracket notation_, we use the _computed member access operator_, which,
-recall from the lesson on `Array`s, is a pair of square brackets (`[]`). To access
-the same properties as above, we need to represent them as strings inside the
-operator:
-
-```js
-address['street1'];
-// => "11 Broadway"
-
-address['street2'];
-// => "2nd Floor"
-
-address['city'];
-// => "New York"
-
-address['state'];
-// => "NY"
-
-address['zipCode'];
-// => 10004
-```
-
-Bracket notation is a bit harder to read than dot notation, so we always default
-to the latter. However, there are two main situations in which to use bracket
-notation.
-
-#### With Nonstandard Keys
-
-If (for whatever reason) you need to use a nonstandard string as the key in an
-`Object`, you'll only be able to access the properties with bracket notation. For
-example, this is a valid `Object`:
-
-```js
-const wildKeys = {
-  'Cash rules everything around me.': 'Wu',
-  'C.R.E.A.M.': 'Tang',
-  'Get the money.': 'For',
-  "$ $ bill, y'all!": 'Ever'
-};
-```
-
-It's impossible to access those properties with dot notation:
-
-```js
-wildKeys.'Cash rules everything around me.';
-// ERROR: Uncaught SyntaxError: Unexpected string
-```
-
-But bracket notation works just fine:
-
-```js
-wildKeys["$ $ bill, y'all!"];
-// => "Ever"
-```
-
-In order to access a property via dot notation, **the key must follow the same
-naming rules applied to variables and functions**. It's also important to note
-that under the hood **all keys are strings**. Don't waste too much time
-worrying whether a key is accessible via dot notation. If you follow these rules
-when naming your keys, everything will work out:
-
-- camelCaseEverything
-- Start the key with a lowercase letter
-- No spaces or punctuation
-
-If you follow those three rules, you'll be able to access all of an `Object`'s
-properties via bracket notation **or** dot notation.
-
-***Top Tip***: Always name your `Object`'s keys according to the above three rules.
-Keeping everything standardized is good, and being able to access properties
-via dot notation is much more readable than having to always default to
-bracket notation.
-
-#### Accessing Properties Dynamically
-
-The other situation in which bracket notation is required is if we want to
-dynamically access properties. From the lesson on `Array`s, remember why we call
-it the _computed member access operator_: we can place any expression inside the
-brackets and JavaScript will _compute_ its value to figure out which property to
-access. For example, we can access the `zipCode` property from our `address`
-`Object` like so:
-
-```js
-address['zip' + 'Code'];
-// => 10004
-```
-
-Pretty neat, but the real strength of bracket notation is its ability to compute
-the value of variables on the fly. For example:
-
-```js
-const meals = {
-  breakfast: 'Oatmeal',
-  lunch: 'Caesar salad',
-  dinner: 'Chimichangas'
-};
-
-let mealName = 'lunch';
-
-meals[mealName];
-// => "Caesar salad"
-```
-
-If we try to use the `mealName` variable with dot notation, it doesn't work:
-
-```js
-mealName = 'dinner';
-// => "dinner"
-
-meals.mealName;
-// => undefined
-```
-
-With dot notation, JavaScript doesn't treat `mealName` as a variable — it checks
-whether a property exists with a key of `mealName`, only finds properties named
-`breakfast`, `lunch`, and `dinner`, and so returns `undefined`. Essentially, dot
-notation is for when you know the exact name of the property in advance, and
-bracket notation is for when you need to compute it when the program runs.
-
-The need for bracket notation doesn't stop at dynamically setting properties on
-an already-created `Object`. Since the ES2015 update to JavaScript, we can also
-use bracket notation to dynamically set properties _during the creation of a new
-`Object`_. For example:
-
-```js
-const morningMeal = 'breakfast';
-const middayMeal = 'lunch';
-const eveningMeal = 'dinner';
-
-const meals = {
-  [morningMeal]: 'French toast',
-  [middayMeal]: 'Personal pizza',
-  [eveningMeal]: 'Fish and chips'
-};
-
-meals;
-// => { breakfast: "French toast", lunch: "Personal pizza", dinner: "Fish and chips" }
-```
-
-Let's try doing the same thing without the square brackets:
-
-```js
-const morningMeal = 'breakfast';
-const middayMeal = 'lunch';
-const eveningMeal = 'dinner';
-
-const meals = {
-  morningMeal: 'French toast',
-  middayMeal: 'Personal pizza',
-  eveningMeal: 'Fish and chips'
-};
-
-meals;
-// => { morningMeal: "French toast", middayMeal: "Personal pizza", eveningMeal: "Fish and chips" }
-```
-
-Without the square brackets, JavaScript treated each key as a literal
-identifier instead of a variable. Bracket notation — the _computed member access
-operator_ once again shows its powers of computation!
-
-Bracket notation will really come in handy when we start iterating over `Object`s
-and programmatically accessing and assigning properties.
-
-## Add a Property to an Object
-
-To add properties to an `Object`, we can use either dot notation or bracket
-notation:
+We can do this using either dot or bracket notation, and we can use any
+expression as the value:
 
 ```js
 const circle = {};
@@ -371,47 +53,30 @@ circle.radius = 5;
 circle['diameter'] = 10;
 
 circle.circumference = circle.diameter * Math.PI;
-// => 31.41592653589793
+//=> 31.41592653589793
 
 circle['area'] = Math.PI * circle.radius ** 2;
-// => 78.53981633974483
+//=> 78.53981633974483
 
 circle;
-// => { radius: 5, diameter: 10, circumference: 31.41592653589793, area: 78.53981633974483 }
+//=> { radius: 5, diameter: 10, circumference: 31.41592653589793, area: 78.53981633974483 }
 ```
 
-Multiple properties can have the same value:
+**A Side Note**: Recall from the lesson on `Array`s that we can add, modify or
+delete elements even if we use `const` to initialize the `Array`. The same thing
+applies here: we can add, modify or delete properties, but we can't reassign the
+variable itself.
 
-```js
-const meals = {
-  breakfast: 'Avocado toast',
-  lunch: 'Avocado toast',
-  dinner: 'Avocado toast'
-};
+**Top Tip**: Note that the process above gives us an alternative to typing out
+our `Object` using literal syntax: we can initialize an empty array and then use
+dot notation or bracket notation to create the properties programmatically. This
+approach is less error-prone than using literal syntax since JavaScript creates
+the correct `Object` syntax for us. Try it out in the REPL.
 
-meals.breakfast;
-// => "Avocado toast"
+### Modify a Property Using Dot or Bracket Notation
 
-meals.dinner;
-// => "Avocado toast"
-```
-
-But keys must be unique. If the same key is used for multiple properties, only
-the final value will be retained. The rest will be overwritten:
-
-```js
-const meals = {
-  breakfast: 'Avocado toast',
-  breakfast: 'Oatmeal',
-  breakfast: 'Scrambled eggs'
-};
-
-meals;
-// => { breakfast: "Scrambled eggs" }
-```
-
-We can update or overwrite existing properties by assigning a new value to an
-existing key:
+We can update or overwrite existing properties simply by assigning a new value
+to an existing key:
 
 ```js
 const mondayMenu = {
@@ -427,20 +92,27 @@ const mondayMenu = {
 mondayMenu.fries = 'Sweet potato';
 
 mondayMenu;
-// => { cheesePlate: { soft: "Chèvre", semiSoft: "Gruyère", hard: "Manchego" }, fries: "Sweet potato", salad: "Cobb" }
+//=> { cheesePlate: { soft: "Chèvre", semiSoft: "Gruyère", hard: "Manchego" }, fries: "Sweet potato", salad: "Cobb" }
 ```
 
-Note that modifying an `Object`'s properties in the way we did above is _destructive_.
-This means that we're making changes directly to the original `Object`. We could
-encapsulate this modification process in a function, like so:
+Note that modifying an `Object`'s properties in the way we did above is
+_destructive_. This means that we're making changes directly to the original
+`Object`.
+
+Let's take a look at an example. We'll start by creating a function to
+encapsulate this modification process:
 
 ```js
 function destructivelyUpdateObject (obj, key, value) {
-  obj[key] = value;
+  obj[key] = value; //Why are we using bracket notation here?
 
   return obj;
 }
 ```
+
+Our function takes three arguments: the original menu `Object`, the `key`
+identifying the property we want to update, and the `value` we want to change
+its value to.
 
 At our restaurant, we've finished serving for the day. It's time to update our
 `mondayMenu` to the `tuesdayMenu`:
@@ -457,26 +129,27 @@ const mondayMenu = {
 };
 
 const tuesdayMenu = destructivelyUpdateObject(mondayMenu, 'salad', 'Caesar');
-// => { cheesePlate: { soft: "Chèvre", semiSoft: "Gruyère", hard: "Manchego" }, fries: "Sweet potato", salad: "Caesar" }
+//=> { cheesePlate: { soft: "Chèvre", semiSoft: "Gruyère", hard: "Manchego" }, fries: "Sweet potato", salad: "Caesar" }
 
 tuesdayMenu.salad;
-// => "Caesar"
+//=> "Caesar"
 ```
 
 Looks like our `tuesdayMenu` came out perfectly. But what about `mondayMenu`?
 
 ```js
 mondayMenu.salad;
-// => "Caesar"
+//=> "Caesar"
 ```
 
 Dang! We don't serve Caesar salad on Mondays. Instead of destructively updating
 the original menu, is there a way to nondestructively merge the change(s) into a
 new `Object`, leaving the original intact?
 
-## Use Convenience Methods Like `Object.assign()` and `Object.keys()`
+## Update an Object Nondestructively
 
-We can create a method that accepts the old menu and the proposed change:
+Let's create a new method; it will take the same three arguments as the previous
+method:
 
 ```js
 function nondestructivelyUpdateObject(obj, key, value) {
@@ -484,19 +157,22 @@ function nondestructivelyUpdateObject(obj, key, value) {
 }
 ```
 
-Then, with the ES2015 _spread operator_, we can copy all of the old menu
+Recall from the lessons on `Array`s that we can use the _spread operator_ to
+copy all the elements of an existing array into a new array. We can do the same
+thing with `Object`s. Let's use the spread operator to copy all of the old menu
 `Object`'s properties into a new `Object`:
 
 ```js
 function nondestructivelyUpdateObject(obj, key, value) {
   const newObj = { ...obj };
 
-  // Code to return new, updated menu object
+  // Code to return new, updated menu object goes here
 }
 ```
 
-And finally, we can update the new menu `Object` with the proposed change and
-return the updated menu:
+This will create a clone of the original object and save it into a new variable.
+We can then update the newly-created `newObj` with the desired change and
+return that updated menu, leaving the original menu `Object` unchanged:
 
 ```js
 function nondestructivelyUpdateObject(obj, key, value) {
@@ -510,32 +186,32 @@ function nondestructivelyUpdateObject(obj, key, value) {
 const sundayMenu = nondestructivelyUpdateObject(tuesdayMenu, 'fries', 'Shoestring');
 
 tuesdayMenu.fries;
-// => "Sweet potato"
+//=> "Sweet potato"
 
 sundayMenu.fries;
-// => "Shoestring"
+//=> "Shoestring"
 ```
 
-**A Side Note**: You may notice that we're using `const` here, but _adding_ a key
-and value. But that can't be right, since `const` means ***constant***, that is
-can't change. The _data_ in a `const` pointing to an `Array` or `Object`
-can still be changed, but a new value _cannot_ be assigned to the name. Given `const
-x = {}` it's OK to say `x.dog = "Poodle"`, but it is ***not*** OK to say `x = [1,2,3]`.
+To review, we are calling our `nondestructivelyUpdateObject()` function, passing
+as our arguments the original menu (`tuesdayMenu`) and the key and value
+representing the desired change. The function first makes a copy of
+`tuesdayMenu`, then changes the value associated with the `fries` key to
+`"Shoestring"`. Finally, it returns the updated menu, which is stored into the
+variable `sundayMenu`.
 
-
-Anyway, back to nondestructively returning `Object`s. We've got our code written,
-but it's quite a bit to write, and it's not very extensible. If we want to
-modify more than a single property, we'll have to completely rewrite our
+While this works, it's quite a bit to write, and it's not very extensible. If we
+want to modify more than a single property, we'll have to completely rewrite our
 function! Luckily, JavaScript has a much better solution for us.
 
-### `Object.assign()`
+## Use `Object.assign()`
 
-JavaScript provides us access to a global `Object` `Object` that has a bunch of
-helpful methods we can use. One of those methods is `Object.assign()`, which
-allows us to combine properties from multiple `Object`s into a single `Object`. The
-first argument passed to `Object.assign()` is the initial `Object` in which all of
-the properties are merged. Every additional argument is an `Object` whose
-properties we want to merge into the first `Object`:
+In the previous lesson, we took a look at a couple of JavaScript's static
+`Object` methods, `Object.keys()` and `Object.values()`. A third method,
+[`Object.assign()`][assign], will allow us to combine properties from multiple
+`Object`s into a single `Object`. The method takes two or more `Object`s as its
+arguments. The first argument passed to `Object.assign()` is the `Object` into
+which all of the properties will be merged. Every additional argument is an
+`Object` whose properties we want to merge into the first `Object`:
 
 ```js
 Object.assign(initialObject, additionalObject, additionalObject, ...);
@@ -546,7 +222,7 @@ additional `Object`s' properties have been merged in:
 
 ```js
 Object.assign({ eggs: 3 }, { flour: '1 cup' });
-// => { eggs: 3, flour: "1 cup" }
+//=> { eggs: 3, flour: "1 cup" }
 
 Object.assign({ eggs: 3 }, { chocolateChips: '1 cup', flour: '2 cups' }, { flour: '1/2 cup' });
 // { eggs: 3, chocolateChips: "1 cup", flour: "1/2 cup" }
@@ -567,6 +243,14 @@ recipe.flour = '2 cups';
 recipe.flour = '1/2 cup';
 ```
 
+Try both approaches out in REPL and verify that they yield the same results.
+
+Note that the `Object` being passed as the first argument &mdash; in this case,
+recipe &mdash; is modified and returned at the end. So simply using
+`Object.assign()` does not make our function nondestructive. So how do we solve
+that problem? Well, the first argument we pass **does not need to be an existing
+`Object`**!
+
 A common pattern for `Object.assign()` is to provide an empty `Object` as the
 first argument. That way we're composing an entirely new `Object` instead of
 modifying or overwriting the properties of an existing `Object`. This pattern
@@ -577,27 +261,44 @@ nondestructive way:
 function nondestructivelyUpdateObject(obj, key, value) {
   return Object.assign({}, obj, { [key]: value });
 }
+```
+
+The code above takes the first argument (an empty `Object`), adds all the
+properties in `obj` to it, then adds one final property consisting of the key
+and value that represent the change we want to make. If that key doesn't already
+exist in `obj`, it is added and its value is set to `value`. If it does already
+exist, its old value is replaced by `value`. Note that all the arguments to
+`Object.assigne()` need to be objects, so we're representing the key-value pair
+as an `Object` using literal syntax here. Finally, the resulting new `Object` is
+returned. Whew!
+
+Let's take a look at it using our `recipe` example:
+
+```js
+function nondestructivelyUpdateObject(obj, key, value) {
+  return Object.assign({}, obj, { [key]: value });
+}
 
 const recipe = { eggs: 3 };
 
 const newRecipe = nondestructivelyUpdateObject(recipe, 'chocolate', '1 cup');
-// => { eggs: 3, chocolate: "1 cup" }
+//=> { eggs: 3, chocolate: "1 cup" }
 
 newRecipe;
-// => { eggs: 3, chocolate: "1 cup" }
+//=> { eggs: 3, chocolate: "1 cup" }
 
 recipe;
-// => { eggs: 3 }
+//=> { eggs: 3 }
 ```
 
-It's important that we merge everything into a new, empty `Object`. Otherwise, we
-would be modifying the original `Object`. In your browser's console, test what
-happens if the body of the above function were `return Object.assign(obj, {
-[key]: value });`. Uh oh, back to being destructive!
+It's important that we merge everything into a new, empty `Object`. Otherwise,
+we would be modifying the original `Object`.
 
-Let's write a function for our restaurant that accepts an old menu and some
-changes we want to make and returns a new menu **without modifying the old
-menu**:
+So now let's write a new function for our restaurant that uses this technique.
+We can also make one additional improvement: we can set up our function to take
+an `Object` containing the changes we want to make as an argument, rather than a
+single key and value. This enables us to make multiple changes with one call to
+the function:
 
 ```js
 function createNewMenu (oldMenu, menuChanges) {
@@ -626,15 +327,16 @@ const newOfferings = {
 const wednesdayMenu = createNewMenu(tuesdayMenu, newOfferings);
 
 wednesdayMenu;
-// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Provolone" }, fries: "Sweet potato", salad: "Southwestern" }
+//=> { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Provolone" }, fries: "Sweet potato", salad: "Southwestern" }
 
 tuesdayMenu;
-// => { cheesePlate: { soft: "Chèvre", semiSoft: "Gruyère", hard: "Manchego" }, fries: "Sweet potato", salad: "Caesar" }
+//=> { cheesePlate: { soft: "Chèvre", semiSoft: "Gruyère", hard: "Manchego" }, fries: "Sweet potato", salad: "Caesar" }
 ```
 
-**Note:** For deep cloning, we need to use other alternatives because `Object.assign()` copies property values. 
-
-For example, if `newOfferings` did not have an updated value for `hard` cheese such as:
+Note that the value for `fries` remains the same because our `newOfferings`
+`Object` did not contain a change for that property. **However, this does not
+work for _nested_ `Objects`.** For example, if `newOfferings` did not have an
+updated value for `hard` cheese:
 
 ```js
 const newOfferings = {
@@ -646,52 +348,25 @@ const newOfferings = {
 };
 ```
 
-Our output for `const wednesdayMenu = createNewMenu(tuesdayMenu, newOfferings);` would look like this:
+Our updated menu would not include that property and would look like this:
 
 ```js
 wednesdayMenu;
-// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina"}, fries: "Sweet potato", salad: "Southwestern" }
+//=> { cheesePlate: { soft: "Brie", semiSoft: "Fontina"}, fries: "Sweet potato", salad: "Southwestern" }
 ```
 
 ... instead of the desired outcome of this:
 
 ```js
-
 wednesdayMenu;
-// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: 'Manchego'}, fries: "Sweet potato", salad: "Southwestern" }
+//=> { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Manchego"}, fries: "Sweet potato", salad: "Southwestern" }
 ```
+
+You don't need to worry about this too much for now: just be aware that this
+method does not create a _deep clone_. You will learn how to do that later in the
+course.
 
 Bon appétit!
-
-### `Object.keys()`
-
-Another convenience method available on the global `Object` `Object` is
-`Object.keys()`. When an `Object` is passed as an argument to `Object.keys()`, the
-return value is an `Array` containing all of the keys at the top level of the
-`Object`:
-
-```js
-const wednesdayMenu = {
-  cheesePlate: {
-    soft: 'Brie',
-    semiSoft: 'Fontina',
-    hard: 'Provolone'
-  },
-  fries: 'Sweet potato',
-  salad: 'Southwestern'
-};
-
-Object.keys(wednesdayMenu);
-// => ["cheesePlate", "fries", "salad"]
-```
-
-Notice that it didn't pick up the keys in the nested `cheesePlate` `Object` — just
-the keys from the properties declared at the top level within `wednesdayMenu`.
-
-***NOTE***: The sequence in which keys are ordered in the returned `Array` is not
-consistent across browsers and should not be relied upon. All of the `Object`'s
-keys will be in the `Array`, but you can't count on `keyA` always being at
-index `0` of the `Array` and `keyB` always being at index `1`.
 
 ## Remove a Property from an Object
 
@@ -710,13 +385,13 @@ const wednesdayMenu = {
 };
 
 delete wednesdayMenu.salad;
-// => true
+//=> true
 
 wednesdayMenu;
-// => { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Provolone" }, fries: "Sweet potato" }
+//=> { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Provolone" }, fries: "Sweet potato" }
 ```
 
-We pass the property that we'd like to remove to the `delete` operator, and
+We pass the property that we'd like to remove to the [`delete`][] operator, and
 JavaScript takes care of the rest. Poof! No more `salad` property on the
 `wednesdayMenu` `Object`.
 
@@ -733,7 +408,7 @@ returns when we use it on an `Array`:
 
 ```js
 typeof [];
-// => "object"
+//=> "object"
 ```
 
 We can set properties on an `Array` just like a regular `Object`:
@@ -744,7 +419,7 @@ const myArray = [];
 myArray.summary = 'Empty array!';
 
 myArray;
-// => [summary: "Empty array!"]
+//=> [summary: "Empty array!"]
 ```
 
 And we can modify and access those properties, too:
@@ -753,10 +428,10 @@ And we can modify and access those properties, too:
 myArray['summary'] = 'This array is totally empty.';
 
 myArray;
-// => [summary: "This array is totally empty."]
+//=> [summary: "This array is totally empty."]
 
 myArray.summary;
-// => "This array is totally empty."
+//=> "This array is totally empty."
 ```
 
 In fact, _everything_ we just learned how to do to `Object`s can also be done to
@@ -765,10 +440,10 @@ stuff, let's `.push()` some values into our `Array`:
 
 ```js
 myArray.push(2, 3, 5, 7);
-// => 4
+//=> 4
 
 myArray;
-// => [2, 3, 5, 7, summary: "This array is totally empty."]
+//=> [2, 3, 5, 7, summary: "This array is totally empty."]
 ```
 
 Cool, looks like everything's still in there. What's your guess about the
@@ -776,7 +451,7 @@ Cool, looks like everything's still in there. What's your guess about the
 
 ```js
 myArray.length;
-// => 4
+//=> 4
 ```
 
 Huh, that's interesting. Surely our `summary` must be the first element in the
@@ -784,14 +459,14 @@ Huh, that's interesting. Surely our `summary` must be the first element in the
 
 ```js
 myArray[0];
-// => 2
+//=> 2
 ```
 
 Hm, then maybe it's the last element?
 
 ```js
 myArray[myArray.length - 1];
-// => 7
+//=> 7
 ```
 
 What the heck? Where is it?
@@ -809,11 +484,14 @@ an `Object`-style property or an `Array`-style element?
 const myArray = [];
 
 myArray[0] = 'Will this be an `Object` property or an `Array` element?';
-// => "Will this be an `Object` property or an `Array` element?"
+//=> "Will this be an `Object` property or an `Array` element?"
 
 // Moment of truth...
 myArray.length;
-// => 1
+//=> 1
+
+myArray;
+//=> ["Will this be an `Object` property or an `Array` element?"]
 ```
 
 So JavaScript used that assignment operation to add a new `Array`-style element.
@@ -822,13 +500,13 @@ string?
 
 ```js
 myArray['0'] = 'What about this one?';
-// => "What about this one?"
+//=> "What about this one?"
 
 myArray.length;
-// => 1
+//=> 1
 
 myArray;
-// => ["What about this one?"]
+//=> ["What about this one?"]
 ```
 
 This is hitting on a fundamental truth: **all keys in `Object`s and all indexes in
@@ -843,62 +521,64 @@ the `Array`'s special list of elements, and it treats everything else as a simpl
 const myArray = [2, 3, 5, 7];
 
 myArray['1'] = 'Hi';
-// => "Hi"
+//=> "Hi"
 
 myArray;
-// => [2, "Hi", 5, 7]
+//=> [2, "Hi", 5, 7]
 
 myArray['01'] = 'Ho';
-// => "Ho"
+//=> "Ho"
 
 myArray;
-// => [2, "Hi", 5, 7, 01: "Ho"]
+//=> [2, "Hi", 5, 7, 01: "Ho"]
 
 myArray[01];
-// => "Hi"
+//=> "Hi"
 
 myArray['01'];
-// => "Ho"
+//=> "Ho"
 ```
 
-After adding our weird `'01'` property, the `.length` property still returns `4`:
+After adding our weird `'01'` property, the `.length` property still returns
+`4`:
 
 ```js
 myArray.length;
-// => 4
+//=> 4
 ```
 
-So it would stand to reason that `Object.keys()` would only return `'01'`, right?
+So it would stand to reason that `Object.keys()` would only return `'01'`,
+right?
 
 ```js
 Object.keys(myArray);
-// => ["0", "1", "2", "3", "01"]
+//=> ["0", "1", "2", "3", "01"]
 ```
 
 Unfortunately not. The reason why `Array`s have this behavior would take us deep
 inside the JavaScript source code, and it's frankly not that important. Just
 remember these simple guidelines, and you'll be just fine:
 
-- **For accessing elements in an `Array`, always use integers**.
-- **Be wary of setting `Object`-style properties on an `Array`**. There's rarely any reason to, and it's usually more trouble than it's worth.
-- **Remember that all `Object` keys, including `Array` indexes, are strings**. This will really come into play when we learn how to iterate over `Object`s, so keep it in the back of your mind.
+* **For accessing elements in an `Array`, always use integers**.
+* **Be wary of setting `Object`-style properties on an `Array`**. There's rarely any reason to, and it's usually more trouble than it's worth.
+* **Remember that all `Object` keys, including `Array` indexes, are strings**. This will really come into play when we learn how to iterate over `Object`s, so keep it in the back of your mind.
 
 ## Conclusion
 
-We dug deep into `Object`s in JavaScript. We identified what an `Object` is and how
-to access values stored in it. We also covered how to add and remove properties,
-and use the convenience methods `Object.assign()` and `Object.keys()`. We also
-traced the link between `Object`s and `Array`s.
+In this and the previous lesson, we dug deep into `Object`s in JavaScript. We
+identified what an `Object` is and how to access values stored in it. We also
+covered how to add and remove properties and how to use some of JavaScript's
+convenience methods (`Object.keys()`, `Object.values()`, and `Object.assign()`).
+We also explored the relationship between `Object`s and `Array`s.
 
 ## Resources
 
-- MDN
-  + [`Object.assign()`][assign]
-  + [`Object.keys()`][keys]
-  + [`delete`][delete]
-  + [Object basics][Basics]
+* MDN
+  * [Object basics][Basics]
+  * [`Object.assign()`][assign]
+  * [`delete`][delete]
 
 [assign]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
-[keys]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
 [delete]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete
 [Basics]: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Basics
+[repl.it]: https://repl.it/languages/javascript
