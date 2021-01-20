@@ -384,7 +384,7 @@ wednesdayMenu;
 //=> { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Provolone" }, fries: "Sweet potato" }
 ```
 
-We pass the property that we'd like to remove to the [`delete`][] operator, and
+We pass the property that we'd like to remove to the [`delete`][delete] operator, and
 JavaScript takes care of the rest. Poof! No more `salad` property on the
 `wednesdayMenu` `Object`.
 
