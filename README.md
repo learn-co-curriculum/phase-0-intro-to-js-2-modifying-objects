@@ -261,7 +261,7 @@ properties in `obj` to it, then adds one final property consisting of the key
 and value that represent the change we want to make. If that key doesn't already
 exist in `obj`, it is added and its value is set to `value`. If it does already
 exist, its old value is replaced by `value`. Note that all the arguments to
-`Object.assigne()` need to be objects, so we're representing the key-value pair
+`Object.assign()` need to be objects, so we're representing the key-value pair
 as an `Object` using literal syntax here. Finally, the resulting new `Object` is
 returned. Whew!
 
