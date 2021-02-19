@@ -263,15 +263,14 @@ The code above takes the first argument (an empty `Object`), adds all the
 properties in `obj` to it, then adds one final property consisting of the key
 and value that represent the change we want to make. If that key doesn't already
 exist in `obj`, it is added and its value is set to `value`. If it does already
-exist, its old value is replaced by `value`.
+exist, its old value is replaced by `value`. Note that all the arguments to
+`Object.assigne()` must be objects, so we're representing the key-value pair
+as an `Object` using literal syntax here. Finally, the resulting new `Object` is
+returned.
 
 In other languages (like Ruby), this behavior is called "merging." You take an
 original base `Object` (maybe with some typical "standard" attribute / value
 pairs already set), and then you "merge" in additional Object(s).
-
-Note that all the arguments to `Object.assigne()` need to be objects, so we're
-representing the key-value pair as an `Object` using literal syntax here.
-Finally, the resulting new `Object` is returned. Whew!
 
 Let's take a look at it using our `recipe` example:
 
