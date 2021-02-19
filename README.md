@@ -62,16 +62,9 @@ circle;
 //=> { radius: 5, diameter: 10, circumference: 31.41592653589793, area: 78.53981633974483 }
 ```
 
-**A Side Note**: Recall from the lesson on `Array`s that we can add, modify or
-delete elements even if we use `const` to initialize the `Array`. The same thing
-applies here: we can add, modify or delete properties, but we can't reassign the
-variable itself.
+> **A Side Note**: Recall from the lesson on `Array`s that we can add, modify or delete elements even if we use `const` to initialize the `Array`. The same thing applies here: we can add, modify or delete properties, but we can't reassign the variable itself.
 
-**Top Tip**: Note that the process above gives us an alternative to typing out
-our `Object` using literal syntax: we can initialize an empty array and then use
-dot notation or bracket notation to create the properties programmatically. This
-approach is less error-prone than using literal syntax since JavaScript creates
-the correct `Object` syntax for us. Try it out in the REPL.
+> **Top Tip**: Note that the process above gives us an alternative to typing out our `Object` using literal syntax: we can initialize an empty array and then use dot notation or bracket notation to create the properties programmatically. This approach is less error-prone than using literal syntax since JavaScript creates the correct `Object` syntax for us. Try it out in the REPL.
 
 ### Modify a Property Using Dot or Bracket Notation
 
@@ -245,8 +238,8 @@ recipe.flour = '1/2 cup';
 
 Try both approaches out in REPL and verify that they yield the same results.
 
-Note that the `Object` being passed as the first argument &mdash; in this case,
-recipe &mdash; is modified and returned at the end. So simply using
+Note that the `Object` being passed as the first argument — in this case,
+recipe — is modified and returned at the end. So simply using
 `Object.assign()` does not make our function nondestructive. So how do we solve
 that problem? Well, the first argument we pass **does not need to be an existing
 `Object`**!
@@ -414,7 +407,7 @@ wednesdayMenu;
 //=> { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Provolone" }, fries: "Sweet potato" }
 ```
 
-We pass the property that we'd like to remove to the [`delete`][] operator, and
+We pass the property that we'd like to remove to the [`delete`][delete] operator, and
 JavaScript takes care of the rest. Poof! No more `salad` property on the
 `wednesdayMenu` `Object`.
 
