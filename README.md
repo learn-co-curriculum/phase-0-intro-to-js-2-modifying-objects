@@ -371,11 +371,11 @@ Bon appétit!
 
 > **NOTE:** Doing nondestructive updates (i.e. "creating new things and merging
 > on top") is a really important pattern. It turns out that, in many places,
-> nondestructive updates are more performant. The main reason on this is when
+> nondestructive updates are more performant. The main reason for this is when
 > you add something to an existing `Object`, the computer has to make sure that
 > the `Object` has enough room to add what you're saying to add. If it doesn't,
 > the computer needs to do cleanup work, find some more space, copy the old
-> thing over, add the new, thing, and then resume work, etc. That "accounting"
+> thing over, add the new, thing, and then resume work. That "accounting"
 > process is actually quite slow.
 
 > Furthermore, in the cloud-based world of programming we're moving to more and
