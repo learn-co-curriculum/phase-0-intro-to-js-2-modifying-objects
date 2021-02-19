@@ -4,8 +4,9 @@
 
 * Add an `Object` property using dot or bracket notation
 * Modify a property using dot or bracket notation
-* Update an `Object` nondestructively
-* Use `Object.assign()`
+* Update an `Object` nondestructively using the spread operator
+* Using `Object.assign()`
+* Update an `Object` nondestructively using `Object.assign()`
 * Remove a property from an `Object`
 * Identify the relationship between `Array`s and `Object`s
 
@@ -139,7 +140,7 @@ Dang! We don't serve Caesar salad on Mondays. Instead of destructively updating
 the original menu, is there a way to nondestructively merge the change(s) into a
 new `Object`, leaving the original intact?
 
-## Update an Object Nondestructively
+## Update an Object Nondestructively Using the Spread Operator
 
 Let's create a new method; it will take the same three arguments as the previous
 method:
@@ -196,7 +197,7 @@ While this works, it's quite a bit to write, and it's not very extensible. If we
 want to modify more than a single property, we'll have to completely rewrite our
 function! Luckily, JavaScript has a much better solution for us.
 
-## Use `Object.assign()`
+## Using `Object.assign()`
 
 In the previous lesson, we took a look at a couple of JavaScript's static
 `Object` methods, `Object.keys()` and `Object.values()`. A third method,
@@ -244,7 +245,7 @@ recipe — is modified and returned at the end. So simply using
 that problem? Well, the first argument we pass **does not need to be an existing
 `Object`**!
 
-## Non-Destructively Assign New Data with `Object.assign()`
+## Update an `Object` Nondestructively Using `Object.assign()`
 
 A common pattern for `Object.assign()` is to provide an empty `Object` as the
 first argument. That way we're composing an entirely new `Object` instead of
@@ -262,7 +263,7 @@ The code above takes the first argument (an empty `Object`), adds all the
 properties in `obj` to it, then adds one final property consisting of the key
 and value that represent the change we want to make. If that key doesn't already
 exist in `obj`, it is added and its value is set to `value`. If it does already
-exist, its old value is replaced by `value`. 
+exist, its old value is replaced by `value`.
 
 In other languages (like Ruby), this behavior is called "merging." You take an
 original base `Object` (maybe with some typical "standard" attribute / value
@@ -368,18 +369,18 @@ course.
 
 Bon appétit!
 
-> **NOTE:** Doing non-destructive updates (i.e. "creating new things and merging
+> **NOTE:** Doing nondestructive updates (i.e. "creating new things and merging
 > on top") is a really important pattern. It turns out that, in many places,
-> non-destructive updates are more performant. The main reason on this is when
+> nondestructive updates are more performant. The main reason on this is when
 > you add something to an existing `Object`, the computer has to make sure that
 > the `Object` has enough room to add what you're saying to add. If it doesn't,
 > the computer needs to do cleanup work, find some more space, copy the old
 > thing over, add the new, thing, and then resume work, etc. That "accounting"
 > process is actually quite slow.
 
-> Furthermore, in the cloud-based world of programming we're moving more and
-> more to, we can't be sure that two computers will share the same memory. They
-> might be servers separated by centimeters or kilometers. Using non-destructive
+> Furthermore, in the cloud-based world of programming we're moving to more and
+> more, we can't be sure that two computers will share the same memory. They
+> might be servers separated by centimeters or kilometers. Using nondestructive
 > updates ensures that our functions have "all they need" to run a function call
 > independently, i.e., they have their own copy of the data they need and aren't
 > sharing memory with other machines.
