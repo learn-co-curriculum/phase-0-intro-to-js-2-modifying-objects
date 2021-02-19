@@ -251,6 +251,8 @@ recipe &mdash; is modified and returned at the end. So simply using
 that problem? Well, the first argument we pass **does not need to be an existing
 `Object`**!
 
+## Non-Destructively Assign New Data with `Object.assign()`
+
 A common pattern for `Object.assign()` is to provide an empty `Object` as the
 first argument. That way we're composing an entirely new `Object` instead of
 modifying or overwriting the properties of an existing `Object`. This pattern
@@ -267,10 +269,15 @@ The code above takes the first argument (an empty `Object`), adds all the
 properties in `obj` to it, then adds one final property consisting of the key
 and value that represent the change we want to make. If that key doesn't already
 exist in `obj`, it is added and its value is set to `value`. If it does already
-exist, its old value is replaced by `value`. Note that all the arguments to
-`Object.assigne()` need to be objects, so we're representing the key-value pair
-as an `Object` using literal syntax here. Finally, the resulting new `Object` is
-returned. Whew!
+exist, its old value is replaced by `value`. 
+
+In other languages (like Ruby), this behavior is called "merging." You take an
+original base `Object` (maybe with some typical "standard" attribute / value
+pairs already set), and then you "merge" in additional Object(s).
+
+Note that all the arguments to `Object.assigne()` need to be objects, so we're
+representing the key-value pair as an `Object` using literal syntax here.
+Finally, the resulting new `Object` is returned. Whew!
 
 Let's take a look at it using our `recipe` example:
 
@@ -367,6 +374,22 @@ method does not create a _deep clone_. You will learn how to do that later in th
 course.
 
 Bon appétit!
+
+> **NOTE:** Doing non-destructive updates (i.e. "creating new things and merging
+> on top") is a really important pattern. It turns out that, in many places,
+> non-destructive updates are more performant. The main reason on this is when
+> you add something to an existing `Object`, the computer has to make sure that
+> the `Object` has enough room to add what you're saying to add. If it doesn't,
+> the computer needs to do cleanup work, find some more space, copy the old
+> thing over, add the new, thing, and then resume work, etc. That "accounting"
+> process is actually quite slow.
+
+> Furthermore, in the cloud-based world of programming we're moving more and
+> more to, we can't be sure that two computers will share the same memory. They
+> might be servers separated by centimeters or kilometers. Using non-destructive
+> updates ensures that our functions have "all they need" to run a function call
+> independently, i.e., they have their own copy of the data they need and aren't
+> sharing memory with other machines.
 
 ## Remove a Property from an Object
 
