@@ -238,8 +238,8 @@ recipe.flour = '1/2 cup';
 
 Try both approaches out in REPL and verify that they yield the same results.
 
-Note that the `Object` being passed as the first argument &mdash; in this case,
-recipe &mdash; is modified and returned at the end. So simply using
+Note that the `Object` being passed as the first argument — in this case,
+recipe — is modified and returned at the end. So simply using
 `Object.assign()` does not make our function nondestructive. So how do we solve
 that problem? Well, the first argument we pass **does not need to be an existing
 `Object`**!
