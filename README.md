@@ -65,7 +65,7 @@ circle;
 
 > **A Side Note**: Recall from the lesson on `Array`s that we can add, modify or delete elements even if we use `const` to initialize the `Array`. The same thing applies here: we can add, modify or delete properties, but we can't reassign the variable itself.
 
-> **Top Tip**: Note that the process above gives us an alternative to typing out our `Object` using literal syntax: we can initialize an empty array and then use dot notation or bracket notation to create the properties programmatically. This approach is less error-prone than using literal syntax since JavaScript creates the correct `Object` syntax for us. Try it out in the REPL.
+> **Top Tip**: Note that the process above gives us an alternative to typing out our `Object` using literal syntax: we can initialize an empty object and then use dot notation or bracket notation to create the properties programmatically. This approach is less error-prone than using literal syntax since JavaScript creates the correct `Object` syntax for us. Try it out in the REPL.
 
 ### Modify a Property Using Dot or Bracket Notation
 
@@ -264,7 +264,7 @@ properties in `obj` to it, then adds one final property consisting of the key
 and value that represent the change we want to make. If that key doesn't already
 exist in `obj`, it is added and its value is set to `value`. If it does already
 exist, its old value is replaced by `value`. Note that all the arguments to
-`Object.assigne()` must be objects, so we're representing the key-value pair
+`Object.assign()` must be objects, so we're representing the key-value pair
 as an `Object` using literal syntax here. Finally, the resulting new `Object` is
 returned.
 
