@@ -123,6 +123,8 @@ const mondayMenu = {
 };
 
 const tuesdayMenu = destructivelyUpdateObject(mondayMenu, 'salad', 'Caesar');
+
+tuesdayMenu
 //=> { cheesePlate: { soft: "Chèvre", semiSoft: "Gruyère", hard: "Manchego" }, fries: "Sweet potato", salad: "Caesar" }
 
 tuesdayMenu.salad;
