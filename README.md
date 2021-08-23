@@ -5,8 +5,6 @@
 - Add an `Object` property using dot or bracket notation
 - Modify a property using dot or bracket notation
 - Update an `Object` nondestructively using the spread operator
-- Using `Object.assign()`
-- Update an `Object` nondestructively using `Object.assign()`
 - Remove a property from an `Object`
 - Identify the relationship between `Array`s and `Object`s
 
