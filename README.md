@@ -236,7 +236,7 @@ an argument.
 
 > **Note**: The spread operator has been around for a while, but there's still a
 > chance you'll encounter similar code written using another method,
-> [`Object.assign()`][assign]. Like the spread operator, `Object.assign` allow
+> [`Object.assign()`][assign]. Like the spread operator, `Object.assign` allows
 > us to combine properties from multiple `Object`s into a single `Object`.
 
 In other languages (like Ruby), this behavior is called "merging." You take an
