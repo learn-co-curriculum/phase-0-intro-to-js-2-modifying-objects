@@ -236,12 +236,12 @@ an argument.
 
 > **Note**: The spread operator has been around for a while, but there's still a
 > chance you'll encounter similar code written using another method,
-> [`Object.assign()`][assign]. Like the spread operator, `Object.assign` allow
+> [`Object.assign()`][assign]. Like the spread operator, `Object.assign` allows
 > us to combine properties from multiple `Object`s into a single `Object`.
 
-In other languages (like Ruby), this behavior is called "merging." You take an
-original base `Object` (maybe with some typical "standard" attribute / value
-pairs already set), and then you "merge" in additional `Object`(s).
+> In other languages (like Ruby), this behavior is called "merging." You take an
+> original base `Object` (maybe with some typical "standard" attribute / value
+> pairs already set), and then you "merge" in additional `Object`(s).
 
 **NOTE:** Doing nondestructive updates (i.e. "creating new things and merging
 on top") is a really important pattern. It turns out that, in many places,
@@ -275,9 +275,9 @@ wednesdayMenu;
 //=> { cheesePlate: { soft: "Brie", semiSoft: "Fontina", hard: "Provolone" }, fries: "Sweet potato" }
 ```
 
-We pass the property that we'd like to remove to the [`delete`][delete] operator, and
-JavaScript takes care of the rest. Poof! No more `salad` property on the
-`wednesdayMenu` `Object`.
+We pass the property that we'd like to remove to the [`delete`][delete]
+operator, and JavaScript takes care of the rest. Poof! No more `salad` property
+on the `wednesdayMenu` `Object`.
 
 ## Identify the Relationship Between Arrays and Objects
 
