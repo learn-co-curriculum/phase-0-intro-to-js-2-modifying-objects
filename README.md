@@ -15,7 +15,7 @@ accessing their properties. In this lesson we'll learn how to modify and remove
 properties, both destructively and nondestructively. Finally, we'll explore the
 relationship between `Array`s and `Object`s.
 
-As always, don't forget to follow along in [repl.it][].
+As always, don't forget to follow along in [replit][].
 
 ## Add an `Object` Property Using Dot or Bracket Notation
 
@@ -470,5 +470,5 @@ operator). We also explored the relationship between `Object`s and `Array`s.
 [assign]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
 [delete]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete
 [basics]: https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Basics
-[repl.it]: https://repl.it/languages/javascript
+[replit]: https://replit.com/languages/javascript
 [spread]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax#spread_in_object_literals
